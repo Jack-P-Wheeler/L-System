@@ -8,18 +8,52 @@ def create_string(axiom, generator, order):
         tempFractal = ""
         for i in range(len(newFractal)):
             found = False
-            if newFractal[i] in generator and []:
-                contextL = generator[newFractal[i]][1]
-                contextR = generator[newFractal[i]][2]
-                if [contextL, contextR] == context_search(newFractal, i, contextL, contextR) or contextL == "*" or contextR == "*":
-                    found = True
-                    tempFractal += generator[newFractal[i]][0]
+            for rule in generator:
+                if newFractal[i] == rule[0]:
+                    contextL = rule[1][1]
+                    contextR = rule[1][2]
+                    if (contextL == context_search(newFractal, i, contextL, contextR)[0] or contextL == "*"):
+                        if (contextR == context_search(newFractal, i, contextL, contextR)[1] or contextR == "*"):
+                            found = True
+                            tempFractal += rule[1][0]
+                            
             if found == False:
                 tempFractal += newFractal[i]
         newFractal = tempFractal
     return newFractal
 
+def condition_evaluate():
+    return True
+
 def context_search(tempString, i, searchL, searchR):
+    realContextL, realContextR = "", ""
+    ignore = ["F", "+", "-", "[", "]"]
+    r, l = i, i
+            
+    
+    branches = 0
+    while len(realContextR) < len(searchR) and r < len(tempString) - 1:
+        r += 1
+        if tempString[r] == "]":
+            if r == i+1:
+                realContextL += " "                    
+        if tempString[r] == "[":
+            branches += 1
+        if tempString[r] == "]" and branches > 0:          
+            branches -= 1
+        if branches == 0 and (tempString[r] not in ignore):
+            realContextR += tempString[r]
+            
+    branches = 0
+    while len(realContextL) < len(searchL) and l > 0:
+        l -= 1
+        if tempString[l] == "]":
+            branches += 1
+        if tempString[l] == "[" and branches > 0:
+            branches -= 1        
+        if branches == 0 and (tempString[l] not in ignore):
+            realContextL += tempString[l]
+        
     return [realContextL, realContextR]
 
 def draw_fractal(fractal, D, angle):

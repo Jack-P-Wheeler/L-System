@@ -1,5 +1,3 @@
-from turtle import *
-from random import *
 from math import *
 from Lsystem import *
 
@@ -11,21 +9,30 @@ speed(0)
         
 left(90)
 pu()
-sety(-300)
+sety(-350)
 setx(0)
 pd()
 
 
-angle = 30
+angle = 20
 distance = 5
-axiom = "X"
+axiom = "F0F1F1"
 
-generator = {"X": ["FX", "*", "*"],
-             "F": ["f", "F", "*"]}
+generator = [["0", ["1", "0", "0"]],
+             ["0", ["0", "0", "1"]],
+             ["1", ["0", "0", "0"]],
+             ["1", ["1F1", "0", "1"]],
+             ["0", ["1", "1", "0"]],
+             ["0", ["1[+F1F1]", "1", "1"]],
+             ["1", ["1", "1", "0"]],
+             ["1", ["0", "1", "1"]],
+             ["+", ["-", "*", "*"]],
+             ["-", ["+", "*", "*"]]]
 
-new_fractal = create_string(axiom, generator, 20)
+new_fractal = create_string(axiom, generator, 26)
 draw_fractal(new_fractal, distance, angle)
 print(new_fractal)
 print(len(new_fractal))
+
 
 done()
