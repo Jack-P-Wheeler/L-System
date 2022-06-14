@@ -2,8 +2,6 @@ from turtle import *
 from random import *
 from math import *
 
-#Yo, this is a test for a pull request
-
 def create_string(axiom, generator, order):
     newFractal = axiom 
     for j in range(order):
