@@ -12,8 +12,8 @@ def create_string(axiom, generator, order):
                 if newFractal[i] == rule[0]:
                     contextL = rule[1][1]
                     contextR = rule[1][2]
-                    if (contextL == context_search(newFractal, i, contextL, contextR)[0] or contextL == "*"):
-                        if (contextR == context_search(newFractal, i, contextL, contextR)[1] or contextR == "*"):
+                    if (contextL == context_search(newFractal, i)[0] or contextL == "*"):
+                        if (contextR == context_search(newFractal, i)[1] or contextR == "*"):
                             found = True
                             tempFractal += rule[1][0]
                             
@@ -22,33 +22,32 @@ def create_string(axiom, generator, order):
         newFractal = tempFractal
     return newFractal
 
-def context_search(tempString, pos, searchL, searchR):
-    realContextL, realContextR = "", ""
+def context_search(tempString, pos):
+    realContextL, realContextR = None, None
     ignore = ["F", "+", "-", "[", "]"]
     r, l = pos, pos
+
     branchCounter = 0
-    
-    while len(realContextR) < len(searchR) and r < len(tempString) - 1:
+    while r < len(tempString) - 1 and realContextR is None:
         r += 1
-        if tempString[r] == "]":
-            if r == pos+1:
-                realContextL += " "                    
+        if tempString[r] == "]" and branchCounter == 0:
+            realContextR = None
         if tempString[r] == "[":
             branchCounter += 1
-        if tempString[r] == "]" and branchCounter > 0:          
+        if tempString[r] == "]" and branchCounter > 0:
             branchCounter -= 1
-        if branchCounter == 0 and (tempString[r] not in ignore):
-            realContextR += tempString[r]
-            
+        if (tempString[r] not in ignore) and branchCounter == 0:
+            realContextR = tempString[r]
+
     branchCounter = 0
-    while len(realContextL) < len(searchL) and l > 0:
+    while l > 0 and realContextL is None:
         l -= 1
         if tempString[l] == "]":
             branchCounter += 1
         if tempString[l] == "[" and branchCounter > 0:
-            branchCounter -= 1        
-        if branchCounter == 0 and (tempString[l] not in ignore):
-            realContextL += tempString[l]
+            branchCounter -= 1
+        if (tempString[l] not in ignore) and branchCounter == 0:
+            realContextL = tempString[l]
         
     return [realContextL, realContextR]
 
