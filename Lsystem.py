@@ -26,9 +26,8 @@ def context_search(tempString, i, searchL, searchR):
     realContextL, realContextR = "", ""
     ignore = ["F", "+", "-", "[", "]"]
     r, l = i, i
-            
-    
     branches = 0
+    
     while len(realContextR) < len(searchR) and r < len(tempString) - 1:
         r += 1
         if tempString[r] == "]":
@@ -54,7 +53,6 @@ def context_search(tempString, i, searchL, searchR):
     return [realContextL, realContextR]
 
 def draw_fractal(fractal, D, angle):
-    n = 0
     positions = []
     for i in range(len(fractal)):
         if fractal[i] == 'F':
