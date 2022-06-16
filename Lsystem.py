@@ -22,9 +22,6 @@ def create_string(axiom, generator, order):
         newFractal = tempFractal
     return newFractal
 
-def condition_evaluate():
-    return True
-
 def context_search(tempString, i, searchL, searchR):
     realContextL, realContextR = "", ""
     ignore = ["F", "+", "-", "[", "]"]
