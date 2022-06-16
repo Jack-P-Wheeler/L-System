@@ -22,32 +22,32 @@ def create_string(axiom, generator, order):
         newFractal = tempFractal
     return newFractal
 
-def context_search(tempString, i, searchL, searchR):
+def context_search(tempString, pos, searchL, searchR):
     realContextL, realContextR = "", ""
     ignore = ["F", "+", "-", "[", "]"]
-    r, l = i, i
-    branches = 0
+    r, l = pos, pos
+    branchCounter = 0
     
     while len(realContextR) < len(searchR) and r < len(tempString) - 1:
         r += 1
         if tempString[r] == "]":
-            if r == i+1:
+            if r == pos+1:
                 realContextL += " "                    
         if tempString[r] == "[":
-            branches += 1
-        if tempString[r] == "]" and branches > 0:          
-            branches -= 1
-        if branches == 0 and (tempString[r] not in ignore):
+            branchCounter += 1
+        if tempString[r] == "]" and branchCounter > 0:          
+            branchCounter -= 1
+        if branchCounter == 0 and (tempString[r] not in ignore):
             realContextR += tempString[r]
             
-    branches = 0
+    branchCounter = 0
     while len(realContextL) < len(searchL) and l > 0:
         l -= 1
         if tempString[l] == "]":
-            branches += 1
-        if tempString[l] == "[" and branches > 0:
-            branches -= 1        
-        if branches == 0 and (tempString[l] not in ignore):
+            branchCounter += 1
+        if tempString[l] == "[" and branchCounter > 0:
+            branchCounter -= 1        
+        if branchCounter == 0 and (tempString[l] not in ignore):
             realContextL += tempString[l]
         
     return [realContextL, realContextR]
