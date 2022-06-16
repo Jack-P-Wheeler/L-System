@@ -1,4 +1,3 @@
-# L-System
-Umm... Yep... So pretty much... *sniff sniff* yep...
+# L-System 
 
-Cool stuff I guess, maybe more stuff?
+This python program serves as a demonstration of an L-System, or "Lindenmayer" System.
