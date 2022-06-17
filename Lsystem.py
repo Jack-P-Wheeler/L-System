@@ -52,25 +52,26 @@ def contextSearch(tempString, pos):
     return [realContextL, realContextR]
 
 def drawFractal(fractal, D, angle):
+    dis = D
     positions = []
     for i in range(len(fractal)):
         if fractal[i] == 'F':
-            fd(D)
+            fd(dis)
         elif fractal[i] == 'f':
             pu()
-            fd(D)
+            fd(dis)
             pd() 
         elif fractal[i] == '+':
             right(angle)
         elif fractal[i] == '-':
             left(angle)
         elif fractal[i] == '[':
-            positions.append([pos(), heading(), D])
+            positions.append([pos(), heading(), dis])
         elif fractal[i] == ']':
             turtleState = positions.pop()
             pu()
             setpos(turtleState[0][0], turtleState[0][1])
             seth(turtleState[1])
-            D = turtleState[2]
+            dis = turtleState[2]
             pd()
     done()
