@@ -1,0 +1,8 @@
+axiom = "X"
+
+generator = {"X": "D+[--DBX]D[+DB]X",
+             "P": "[-F++F++++F++F]",
+             "B": "PZPZPZPZ",
+             "Z": "Y",
+             "Y": "+++",
+             "D": "DFF"}
