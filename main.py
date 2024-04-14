@@ -1,5 +1,6 @@
 from math import *
 from Lsystem import *
+from random import *
 
 def setupTurtle():
     screensize(1000,800)
@@ -10,8 +11,22 @@ def setupTurtle():
     setx(0)
     pd()
 
+def mutateGenome(genomeA, genomeB):
+    from Lsystem import rule
+    newGenome = []
+    if len(genomeA) != len(genomeB):
+        return None
+    for i in range(len(genomeA)):
+        newSeed = str(genomeA[i].seed if random() > 0.5 else genomeB[i].seed)
+        newLeft = str(genomeA[i].left if random() > 0.5 else genomeB[i].left)
+        newRight = str(genomeA[i].right if random() > 0.5 else genomeB[i].right)
+        newSprout = str(genomeA[i].sprout)
+        newGenome.append(rule(newSeed, newSprout, newLeft, newRight))
+    return newGenome
+
+
 angle = 16
-distance = 10
+length = 20
 axiom = "F1F1F1"
 
 genome =   [rule('0', '0', '0', '0'),
@@ -26,7 +41,9 @@ genome =   [rule('0', '0', '0', '0'),
             rule('-', '+', '*', '*')]
 
 new_fractal = axiom
-for i in range(14):
+for i in range(16):
     new_fractal = replaceString(new_fractal, genome)
+
+print(stripChars(new_fractal, ('1', '0')))
 setupTurtle()
-drawFractal(new_fractal, distance, angle)
+drawFractal(new_fractal, length, angle)
